@@ -1,0 +1,46 @@
+name: test
+on:
+  push:
+    branches:
+    - "*"
+  workflow_dispatch: 
+    
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    env:
+      vcpkgCommitId: '0f88ecb8528605f91980b90a2c5bad88e3cb565f'
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: lukka/get-cmake@latest
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      id: runvcpkg
+      with:
+        vcpkgDirectory: '${{ runner.workspace }}/build/vcpkg'
+        vcpkgGitCommitId: '${{ env.vcpkgCommitId }}'
+        vcpkgJsonGlob: '**/vcpkg.json'
+    - name: Install Deps # these should already be preinstalled in the ubuntu-24.04 image
+      run: sudo apt-get install autoconf automake libtool pkg-config
+    - name: Run CMake with vcpkg.json manifest
+      uses: lukka/run-cmake@v10
+      with:
+        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+        configurePreset: Base
+        buildPreset: Base
+        configurePresetAdditionalArgs: >-
+          [
+            '-DVCPKG_TARGET_TRIPLET=x64-linux-release',
+            '-DVCPKG_HOST_TRIPLET=x64-linux-release',
+          ]
+    - name: Print Log for Debug
+      if: always()
+      run: |
+        cat  /home/runner/work/libxcrypt-build-test/build/vcpkg/buildtrees/libxcrypt/autoconf-x64-linux-release-out.log
+        cat  /home/runner/work/libxcrypt-build-test/build/vcpkg/buildtrees/libxcrypt/autoconf-x64-linux-release-err.log
