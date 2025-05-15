@@ -106,7 +106,7 @@ jobs:
 
       - name: Install Deps # these should already be preinstalled in the ubuntu-24.04 image
         run: sudo apt-get install autoconf automake libtool pkg-config
-    - name: Install libltdldev
+      - name: Install libltdldev
         run: sudo apt-get update && sudo apt-get install -y libltdl-dev
       
       # Set up Java 17 required by Gradle
