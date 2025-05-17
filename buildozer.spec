@@ -16,7 +16,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = images/*.png
+#source.include_patterns = images/*.png
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.3.0,kivymd==1.1.1,pillow==10.3.0
+requirements = python3,kivy,https://github.com/kivymd/KivyMD/archive/master.zip,pillow,kivygradient
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -67,7 +67,7 @@ orientation = portrait
 osx.python_version = 3
 
 # Kivy version to use
-osx.kivy_version = 1.10.0
+osx.kivy_version = 2.3.0
 
 #
 # Android specific
@@ -81,7 +81,7 @@ fullscreen = 0
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
-#android.presplash_color = #FFFFFF
+android.presplash_color = #F3F4F6
 
 # (string) Presplash animation using Lottie format.
 # see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
@@ -136,7 +136,7 @@ android.permissions = android.permission.INTERNET, (name=android.permission.WRIT
 # agreements. This is intended for automation only. If set to False,
 # the default, you will be shown the license when first running
 # buildozer.
-# android.accept_sdk_license = False
+android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.kivy.android.PythonActivity
@@ -283,7 +283,7 @@ android.permissions = android.permission.INTERNET, (name=android.permission.WRIT
 
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 # In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
-android.archs = armeabi-v7a
+android.archs = arm64-v8a, armeabi-v7a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
